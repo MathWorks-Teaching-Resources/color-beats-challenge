@@ -5,7 +5,7 @@
 
 [![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=MathWorks-Teaching-Resources/color-beats-challenge)
 
-This repository includes the student activity files and an instructor guide for the MATLAB&reg; activity accompanying the TryEngineering Color Beats Challenge and is an optional extension of the [TryEngineering Bright Beats Challenge](https://tryengineering.org/resource/lesson-plan/bright-beats-challenge/).
+This repository includes the student activity files and an instructor guide for the MATLAB&reg; activity accompanying the [TryEngineering Color Beats Challenge](https://tryengineering.org/explore-resources/collections/engineering-simulations/#:~:text=Workshop%20Replay!-,Color,-Beats%20Challenge) and is an optional extension of the [TryEngineering Bright Beats Challenge](https://tryengineering.org/resource/lesson-plan/bright-beats-challenge/).
 
 In this activity, you'll be recording sounds to turn them into pictures! In the Bright Beats Challenge, you used a micro:bit&trade; to create a digital synthesizer that could transform ambient light levels and simple images into musical notes and MATLAB to turn digital images into piano notes. In the Color Beats Challenge, you'll reverse this process and instead turn sounds into pictures! Through the process, students will learn that sound travels as waves. The characteristics of sound waves (pitch, loudness, and purity) can be represented by different colors and turned into an image. When a microphone records audio, the sound turns into a list of numbers. MATLAB can measure that list and transform those numbers into colors. 
 

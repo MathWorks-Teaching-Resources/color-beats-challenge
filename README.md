@@ -20,7 +20,7 @@ This was created with MATLAB release R2026a
 
 ## Instructions
 
-1. (_Optional_) Complete the TryEngineering Bright Beats Design Challenge. 
+1. (_Optional_) Complete the [TryEngineering Bright Beats Design Challenge](https://tryengineering.org/resource/lesson-plan/bright-beats-engineering-lesson/). 
 2. (_Optional_) Open the Activity Guide PDF file.
 3. Open this repository in MATLAB&reg; Online&trade;, or clone and download this repository to your local machine and open in MATLAB Desktop.
 4. Open the [ColorBeatsChallenge_Student_Activity.mlx](ColorBeatsChallenge_Student_Activity.mlx) Live Script to follow the step by step instructions.

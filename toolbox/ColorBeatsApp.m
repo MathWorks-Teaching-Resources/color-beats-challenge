@@ -1,24 +1,16 @@
 classdef ColorBeatsApp < handle
-    % COLORBEATSAPP  Interactive Color Beats Challenge.
+    %ColorBeatsApp - Explore sound as colors in an interactive app
+    %   APP = ColorBeatsApp opens an app with a waveform, color painting,
+    %   pitch scatter, spectrogram, and color key. Choose Demo Sound to
+    %   load the included piano scales or Record to use a microphone.
+    %   The app runs in MATLAB Desktop and MATLAB Online in a browser.
     %
-    % Records a sound with the microphone, then shows five views:
-    %   1. Color Key       - the pitch-to-color rainbow (with note labels)
-    %   2. Waveform        - the raw sound wiggle
-    %   3. Painting        - each moment shown as one colored stripe
-    %   4. Pitches         - a scatter of the exact pitch behind each stripe
-    %   5. Spectrogram     - every pitch at every moment, all at once
+    %   ColorBeatsApp functions:
+    %       delete - Close the app and release its microphone connection
     %
-    % Every slider updates the relevant views live.
-    %
-    % Runs on MATLAB Mobile using the built-in microphone (mobiledev).
-    % Falls back to audiorecorder on desktop when Mobile is not available.
-    % A Demo Sound button generates a synthetic recording for classroom use
-    % when no microphone is available.
-    %
-    % Usage:
-    %   app = ColorBeatsApp;
-    %
-    % Copyright 2026 The MathWorks, Inc.
+    %   See also openColorBeatsChallenge, audioread
+
+    %   Copyright 2026 The MathWorks, Inc.
 
     properties (Access = private)
         % ---- Figure and layout ----
@@ -91,8 +83,8 @@ classdef ColorBeatsApp < handle
                     "ColorBeatsApp needs MATLAB Desktop or MATLAB Online in a browser.\n\n" + ...
                     "It cannot run in MATLAB Mobile, because MATLAB Mobile does not " + ...
                     "support the app windows this app is built from.\n\n" + ...
-                    "On an iPad, open ColorBeatsChallenge_Student_v5.mlx instead. " + ...
-                    "It has the same activity with sliders and buttons that do work there.\n\n" + ...
+                    "On an iPad, open ColorBeatsChallenge_Student_Activity.m instead. " + ...
+                    "Use it in MATLAB Desktop or MATLAB Online to follow the activity.\n\n" + ...
                     "(Original error: %s)", ME.message);
             end
             app.UIFigure.CloseRequestFcn = @(~, ~) app.closeApp();
@@ -151,7 +143,7 @@ classdef ColorBeatsApp < handle
             app.StatusLamp.Layout.Row = 4;
             app.StatusLamp.Layout.Column = 1;
             app.StatusLabel = uilabel(sideGrid, ...
-                "Text", "Ready. Press Record.", ...
+                "Text", "Ready. Choose Demo Sound or Record.", ...
                 "FontWeight", "bold");
             app.StatusLabel.Layout.Row = 4;
             app.StatusLabel.Layout.Column = [2 3];
@@ -205,7 +197,7 @@ classdef ColorBeatsApp < handle
             % ---- Section: Summary text ----
             addHeaderLabel(sideGrid, "What did you make?", 15);
             app.SummaryLabel = uilabel(sideGrid, ...
-                "Text", "Record a sound to see a summary.", ...
+                "Text", "Choose Demo Sound or Record to see a summary.", ...
                 "WordWrap", "on", ...
                 "VerticalAlignment", "top");
             app.SummaryLabel.Layout.Row = [16 19];
@@ -297,7 +289,7 @@ classdef ColorBeatsApp < handle
 
             % Once audio is captured, refresh everything downstream.
             app.refreshAllPlots();
-            app.setStatus("Ready. Press Record.", [0.20 0.65 0.30]);
+            app.setStatus("Ready. Choose Demo Sound or Record.", [0.20 0.65 0.30]);
             app.setControlsEnabled(true);
         end
 
@@ -367,51 +359,23 @@ classdef ColorBeatsApp < handle
         end
 
         function storeAudio(app, audio, fs)
-            if isempty(audio)
-                error("ColorBeatsApp:EmptyAudio", ...
-                    "No audio came through. Check that the microphone is on.");
-            end
-            y = mean(audio, 2);
-            y = y(:);
-            if max(abs(y)) == 0
-                error("ColorBeatsApp:SilentAudio", ...
-                    "The recording is silent. Try again a bit louder.");
-            end
-            app.AudioData  = y / max(abs(y));
-            app.SampleRate = fs;
+            recording = prepareColorBeatsRecording(audio, fs);
+            app.AudioData = recording.y;
+            app.SampleRate = recording.fs;
         end
 
         function loadDemoSound(app)
-            % A hum -> whistle sweep, a bit of "shhh" noise, a low hum ending.
-            fs = 44100;
-            duration = 8;
-            t = (0:1/fs:duration).';
-            y = zeros(size(t));
-
-            % 0.0-2.0 s: steady hum at 220 Hz
-            first = t < 2.0;
-            y(first) = 0.35*sin(2*pi*220*t(first));
-
-            % 2.0-4.5 s: rising sweep 300 -> 900 Hz
-            sweep = t >= 2.0 & t < 4.5;
-            tS = t(sweep) - 2.0;
-            y(sweep) = 0.35*sin(2*pi*(300 + (900-300)/2.5/2*tS).*tS);
-
-            % 4.5-5.5 s: silence (with tiny noise)
-            silent = t >= 4.5 & t < 5.5;
-            y(silent) = 0.01*randn(nnz(silent), 1);
-
-            % 5.5-6.5 s: "shhhh" white noise burst
-            shhh = t >= 5.5 & t < 6.5;
-            y(shhh) = 0.30*randn(nnz(shhh), 1);
-
-            % 6.5-8.0 s: whistle at 700 Hz
-            whistle = t >= 6.5;
-            y(whistle) = 0.35*sin(2*pi*700*t(whistle));
-
-            app.storeAudio(y, fs);
-            app.refreshAllPlots();
-            app.setStatus("Demo sound loaded.", [0.20 0.65 0.30]);
+            sampleFile = fullfile(fileparts(mfilename("fullpath")), ...
+                "data", "majorPianoScales.wav");
+            try
+                [audio, fs] = audioread(sampleFile);
+                app.storeAudio(audio, fs);
+                app.refreshAllPlots();
+                app.setStatus("Piano scales loaded.", [0.20 0.65 0.30]);
+            catch sampleError
+                app.setStatus("Could not load piano sample.", [0.85 0.20 0.20]);
+                uialert(app.UIFigure, sampleError.message, "Sample audio unavailable");
+            end
         end
 
         function setControlsEnabled(app, enabled)
@@ -532,7 +496,7 @@ classdef ColorBeatsApp < handle
             cla(scatterAx);
 
             if isempty(app.AudioData)
-                app.SummaryLabel.Text = "Record a sound to see a summary.";
+                app.SummaryLabel.Text = "Choose Demo Sound or Record to see a summary.";
                 return
             end
 

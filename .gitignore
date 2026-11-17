@@ -1,0 +1,11 @@
+# MATLAB generated files and release packages
+release/
+derived/
+.buildtool/
+*.asv
+*.m~
+slprj/
+*.slxc
+
+# Operating-system files
+.DS_Store

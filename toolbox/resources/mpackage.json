@@ -1,0 +1,16 @@
+{
+  "name": "ColorBeatsChallenge",
+  "displayName": "Color Beats Challenge",
+  "version": "1.0.1",
+  "id": "8a0b4376-91af-4a0e-aecc-629571fea95c",
+  "summary": "Turn recorded sounds or a sample piano scale into colorful pictures with MATLAB.",
+  "description": "Open ColorBeatsChallenge_Student_Activity.m to start. No microphone is required: the activity includes a sample piano scale.",
+  "provider": {
+    "organization": "MathWorks Teaching Resources",
+    "url": "https://github.com/MathWorks-Teaching-Resources/color-beats-challenge"
+  },
+  "folders": [],
+  "dependencies": [],
+  "releaseCompatibility": ">=26.1.*",
+  "schemaVersion": "1.1.0"
+}

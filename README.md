@@ -33,7 +33,7 @@ This was created with MATLAB release R2026a
    mpminstall("toolbox")
    ```
 
-4. If MATLAB asks whether to continue, type `yes` and press Enter. This sets
+4. If MATLAB asks whether to continue, type `Yes` and press Enter. This sets
    up the files so MATLAB can find them. You only need to do this once for
    this version of the activity.
 5. In the same Command Window, enter:
@@ -71,8 +71,7 @@ like a piano; it is not a recording of an acoustic piano.
 5. Run the remaining parts again to turn your recording into colors.
 
 To use a phone or tablet as your microphone, choose **Mobile device** and
-follow the MATLAB Mobile setup instructions inside the activity. The sample
-route requires no mobile-device setup.
+follow the MATLAB Mobile setup instructions inside the activity.
 
 ### Optional: explore the app
 
@@ -103,19 +102,11 @@ Bright Beats is optional. Students can start Color Beats directly.
   `openColorBeatsChallenge`.
 - **MATLAB can't find `openColorBeatsChallenge`?** Complete the installation
   steps above. Type the command exactly as shown, including capital letters.
-- **MATLAB can't find `prepareColorBeatsRecording`?** Install the updated activity
-  (version 1.0.1 or newer), then enter `openColorBeatsChallenge` and run the
-  activity's sections again. Keep the helper file with the student activity.
-  You do not need to open the `.prj` file.
 - **The activity opens as code rather than a lesson?** Right-click the activity
   file in MATLAB's Files panel and choose **Open as Live Script**. If that option
   is unavailable, check your MATLAB version.
 - **No microphone, or recording doesn't work?** Choose **Sample audio** and
   press **Choose audio source**. You can still complete the activity.
-- **Using a school device?** Ask your teacher about MATLAB sign-in or microphone
-  permissions. Microphone permission is unnecessary for the sample.
-- **An older MATLAB version?** Enter `version` in the Command Window to check.
-  This activity requires R2026a or newer; ask your teacher about MATLAB Online.
 
 For more MATLAB help, visit [MATLAB Central](https://www.mathworks.com/matlabcentral/).
 
